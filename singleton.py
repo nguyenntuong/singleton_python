@@ -1,5 +1,6 @@
 import threading
-__singleton_instances_mn={}
+from rdict import ReadOnlyDict
+__singleton_instances_mn = ReadOnlyDict()
 #Python decorator for singleton pattern
 def singleton(_class):
     global __singleton_instances_mn
@@ -9,7 +10,7 @@ def singleton(_class):
             locker = threading.Lock()
             locker.acquire()
             if _class.__name__ not in __singleton_instances_mn:
-                __singleton_instances_mn[_class.__name__]=_class(*args,**kargs)
+                __singleton_instances_mn[_class.__name__] = _class(*args,**kargs)
             locker.release()
             return __singleton_instances_mn[_class.__name__]
     else:
